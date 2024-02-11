@@ -11,6 +11,37 @@ interface Note {
     dateTime: Date
 }
 
+interface Colors {
+    sky?: string,
+    pink?: string,
+    yellow?: string,
+    green?: string,
+    lime?: string,
+    cyan?: string,
+    indigo?: string,
+    purple?: string,
+    teal?: string,
+    rose?: string,
+    fuchsia?: string,
+}
+
+const colors: Colors = {
+    sky: "sky",
+    pink: "pink",
+    yellow: "yellow",
+    green: "green",
+    lime: "lime",
+    cyan: "cyan",
+    indigo: "indigo",
+    purple: "purple",
+    teal: "teal",
+    rose: "rose",
+    fuchsia: "fuchsia",
+}
+
+type NoteBackgroundColorVariants = Colors;
+type BackgroundColorVariants = Colors;
+type ButtonBackgroundColorVariants = Colors;
 
 const NoteBackgroundColorVariants = {
     sky: 'bg-sky-100',
@@ -26,7 +57,7 @@ const NoteBackgroundColorVariants = {
     fuchsia: 'bg-fuchsia-100',
 }
 
-const backgroundColorVariants = {
+const BackgroundColorVariants = {
     sky: 'bg-sky-400',
     pink: 'bg-pink-400',
     yellow: 'bg-yellow-400',
@@ -40,40 +71,8 @@ const backgroundColorVariants = {
     fuchsia: 'bg-fuchsia-400',
 }
 
-const type = {
-    bg: 'bg-',
-    text: 'text-',
-    border: 'border-'
-}
 
-const colors = {
-    yellow: 'yellow-',
-    sky: 'sky-',
-    pink: 'pink-',
-    green: 'green-',
-    lime: 'lime-',
-    cyan: 'cyan-',
-    indigo: 'indigo-',
-    purple: 'purple-',
-    teal: 'teal-',
-    rose: 'rose-',
-    fuchsia: 'fuchsia-'
-}
-
-const range = {
-    50: 50,
-    100: 100,
-    200: 200,
-    300: 300,
-    400: 400,
-    500: 500,
-    600: 600,
-    700: 700,
-    800: 800,
-    900: 900,
-}
-
-const buttonBackgroundColorVariants = {
+const ButtonBackgroundColorVariants = {
     sky: 'bg-sky-600',
     pink: 'bg-pink-600',
     yellow: 'bg-yellow-600',
@@ -173,7 +172,7 @@ const StickyNotes = () => {
                     <div className='w-100 h-8 flex justify-evenly items-center bg-white'>
                         {colorsList.map((color) =>
                             <button key={color}
-                                className={`${backgroundColorVariants[color]} h-6 w-6 transition-transform hover:scale-150 hover:z-10`}
+                                className={`${BackgroundColorVariants[color as keyof typeof BackgroundColorVariants]} h-6 w-6 transition-transform hover:scale-150 hover:z-10`}
                                 onClick={() => setSelectedColor(color)}>&nbsp;</button>)}
                     </div>
                     <div className='h-8'>
@@ -183,7 +182,7 @@ const StickyNotes = () => {
                             maxLength={50}
                             value={newNoteTitle}
                             onChange={(e) => setNewNoteTitle(e.target.value)}
-                            className={`w-full h-full p-2 outline-none text-center focus:outline-none placeholder:text-sm border-b-2 border-b-white ${NoteBackgroundColorVariants[selectedColor]} kalam-regular`}
+                            className={`w-full h-full p-2 outline-none text-center focus:outline-none placeholder:text-sm border-b-2 border-b-white ${NoteBackgroundColorVariants[selectedColor as keyof typeof NoteBackgroundColorVariants]} kalam-regular`}
                         // style={{ borderBottom: "2px solid gray", }}
                         />
                     </div>
@@ -194,25 +193,25 @@ const StickyNotes = () => {
                             maxLength={500}
                             value={newNoteDescription}
                             onChange={(e) => setNewNoteDescription(e.target.value)}
-                            className={`w-full h-full p-2 outline-none resize-none focus:outline-none placeholder:text-sm ${NoteBackgroundColorVariants[selectedColor]} kalam-regular`}
+                            className={`w-full h-full p-2 outline-none resize-none focus:outline-none placeholder:text-sm ${NoteBackgroundColorVariants[selectedColor as keyof typeof NoteBackgroundColorVariants]} kalam-regular`}
                         />
                     </div>
                     {!!newNoteDescription.trim().length &&
                         <button
-                            className={`absolute right-2 bottom-2 p-4 md:p-2 focus:outline-none  text-white border-white rounded-full cursor-pointer ${buttonBackgroundColorVariants[selectedColor]}`}
+                            className={`absolute right-2 bottom-2 p-4 md:p-2 focus:outline-none  text-white border-white rounded-full cursor-pointer ${ButtonBackgroundColorVariants[selectedColor as keyof typeof BackgroundColorVariants]}`}
                             onClick={addNewNote}><Check /></button>
                     }
                 </div>
                 {notesList.map((note) =>
                     <div key={note.id} className='h-80 w-[350px] m-2 relative shadow-md overflow-hidden transition-transform'>
-                        <div className={`w-100 h-8 flex justify-between items-center px-2 ${backgroundColorVariants[note.color]} text-white `}>
+                        <div className={`w-100 h-8 flex justify-between items-center px-2 ${BackgroundColorVariants[note.color as keyof typeof BackgroundColorVariants]} text-white `}>
                             {/* <h6 className='text-sm font-bold font-mono'>{format(new Date(note.dateTime), 'EEE MMM dd hh:mm a')}</h6> */}
                             <h6 className='font-mono'>{format(new Date(note.dateTime), 'EEE MMM dd hh:mm a')}</h6>
                             <button
                                 className='absolute top-1 right-2'
                                 onClick={() => removeNote(note.id)}><X /></button>
                         </div>
-                        <div className={`${NoteBackgroundColorVariants[note.color]} h-72 overflow-y-scroll relative`}>
+                        <div className={`${NoteBackgroundColorVariants[note.color as keyof typeof NoteBackgroundColorVariants]} h-72 overflow-y-scroll relative`}>
                             <h2 className='text-lg text-center mt-1 underline underline-offset-2 capitalize font-semibold kalam-regular'>{note.title ? note.title : null}</h2>
                             <h6 className='p-2 break-words whitespace-break-spaces kalam-regular'>
                                 {note.description}

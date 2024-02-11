@@ -211,9 +211,9 @@ const StickyNotes = () => {
                                 className='absolute top-1 right-2'
                                 onClick={() => removeNote(note.id)}><X /></button>
                         </div>
-                        <div className={`${NoteBackgroundColorVariants[note.color as keyof typeof NoteBackgroundColorVariants]} h-72 overflow-y-scroll relative`}>
+                        <div className={`${NoteBackgroundColorVariants[note.color as keyof typeof NoteBackgroundColorVariants]} h-72 relative`}>
                             <h2 className='text-lg text-center mt-1 underline underline-offset-2 capitalize font-semibold kalam-regular'>{note.title ? note.title : null}</h2>
-                            <h6 className='p-2 break-words whitespace-break-spaces kalam-regular'>
+                            <h6 className='p-2 break-words whitespace-break-spaces kalam-regular overflow-y-auto'>
                                 {note.description}
                             </h6>
                         </div>
